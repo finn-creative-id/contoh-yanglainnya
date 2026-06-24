@@ -1,0 +1,662 @@
+/* Interactive 3D Scrapbook — pastel scrapbook theme */
+:root {
+    --sb-blue: #b8d4f0;
+    --sb-blue-soft: #dbeafe;
+    --sb-pink: #fbcfe8;
+    --sb-pink-deep: #f9a8d4;
+    --sb-paper: #fffbf7;
+    --sb-milky: #fefcfb;
+    --sb-shadow: rgba(184, 132, 158, 0.25);
+}
+
+/* --- Section below Pesan Rahasia (hidden until unlock) --- */
+.scrapbook-trigger-section {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s;
+    pointer-events: none;
+    padding: 2rem 1rem 4rem;
+    text-align: center;
+    max-width: 28rem;
+    margin: 0 auto;
+}
+
+body.secret-unlocked .scrapbook-trigger-section {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.scrapbook-scroll-hint {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(190, 24, 93, 0.45);
+    margin-bottom: 1rem;
+    animation: sbHintBounce 2s ease-in-out infinite;
+}
+
+@keyframes sbHintBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+
+.scrapbook-open-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 9999px;
+    border: none;
+    background: linear-gradient(135deg, var(--sb-pink) 0%, var(--sb-blue) 100%);
+    color: #831843;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 8px 24px var(--sb-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.scrapbook-open-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 12px 28px rgba(236, 72, 153, 0.35);
+}
+
+/* --- Popup modal (flowers stay visible around / through backdrop) --- */
+.scrapbook-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+.scrapbook-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.scrapbook-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 251, 247, 0.35);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.scrapbook-popup {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 520px);
+    max-height: min(92dvh, 680px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    overflow: visible;
+}
+
+.scrapbook-close {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.35rem;
+    z-index: 50;
+    pointer-events: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--sb-pink-deep);
+    background: var(--sb-milky);
+    color: #9d174d;
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--sb-shadow);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.scrapbook-close:hover {
+    transform: scale(1.08);
+    background: var(--sb-pink);
+}
+
+/* --- 3D Book stage (sama di HP & laptop) --- */
+.scrapbook-modal {
+    font-family: 'Outfit', system-ui, sans-serif;
+}
+
+.scrapbook-stage {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2200px;
+    perspective-origin: 50% 45%;
+    overflow: visible;
+    margin: 0 auto;
+}
+
+.scrapbook-stage.is-flipping {
+    perspective-origin: 50% 45%;
+}
+
+.scrapbook-book {
+    position: relative;
+    width: min(88vw, 380px);
+    aspect-ratio: 4 / 5;
+    max-height: min(68dvh, 520px);
+    margin: 0 auto;
+    transform: translateX(var(--book-shift, 0px));
+    transition: transform 0.85s cubic-bezier(0.45, 0.05, 0.2, 1);
+    transform-style: preserve-3d;
+    flex-shrink: 0;
+}
+
+/* Halaman sampul — gradient tengah, tanpa garis buku (HP & laptop) */
+.scrapbook-page-inner.scrapbook-cover {
+    background: linear-gradient(155deg, var(--sb-blue-soft) 0%, var(--sb-pink) 55%, #fce7f3 100%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    text-align: center;
+}
+
+.scrapbook-page-inner.scrapbook-cover::before {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+}
+
+.scrapbook-cover {
+    background: linear-gradient(155deg, var(--sb-blue-soft) 0%, var(--sb-pink) 55%, #fce7f3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scrapbook-cover::before {
+    display: none;
+}
+
+.scrapbook-cover-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.scrapbook-cover-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(157, 23, 77, 0.55);
+    margin: 0 0 0.75rem;
+    font-weight: 600;
+}
+
+.scrapbook-cover-title {
+    font-family: 'Caveat', cursive !important;
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    color: #9d174d;
+    margin: 0 0 0.5rem;
+    line-height: 1.1;
+    text-align: center;
+    text-shadow: 0 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+.scrapbook-cover-sub {
+    font-size: 0.8rem;
+    color: rgba(131, 24, 67, 0.65);
+    margin: 0 0 1.25rem;
+    font-style: italic;
+}
+
+.scrapbook-cover-heart {
+    display: inline-block;
+    font-size: 2rem;
+    color: #ec4899;
+    filter: drop-shadow(0 2px 6px rgba(236, 72, 153, 0.4));
+    animation: sbCoverPulse 2s ease-in-out infinite;
+}
+
+.scrapbook-cover-stars {
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.75rem;
+}
+
+@keyframes sbCoverPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+.scrapbook-sheet {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    transition: transform 0.85s cubic-bezier(0.45, 0.05, 0.2, 1);
+    z-index: 1;
+    will-change: transform;
+}
+
+.scrapbook-sheet.is-current {
+    z-index: 10;
+}
+
+.scrapbook-sheet.is-turned {
+    transform: rotateY(-168deg);
+    z-index: 20;
+    pointer-events: none;
+}
+
+.scrapbook-sheet-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 6px 12px 12px 6px;
+    overflow: hidden;
+    box-shadow:
+        4px 6px 20px var(--sb-shadow),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.scrapbook-sheet-face--front {
+    background: var(--sb-paper);
+    transform: rotateY(0deg);
+}
+
+.scrapbook-sheet-face--back {
+    background: var(--sb-blue-soft);
+    transform: rotateY(180deg);
+}
+
+/* Page content */
+.scrapbook-page-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 1.25rem 1rem 1rem;
+    background:
+        repeating-linear-gradient(
+            transparent,
+            transparent 22px,
+            rgba(184, 212, 240, 0.2) 22px,
+            rgba(184, 212, 240, 0.2) 23px
+        ),
+        var(--sb-paper);
+    overflow: hidden;
+}
+
+.scrapbook-page-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0.75rem;
+    border: 2px dashed rgba(249, 168, 212, 0.45);
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+/* Washi tape */
+.washi {
+    position: absolute;
+    height: 22px;
+    width: 72px;
+    opacity: 0.92;
+    z-index: 3;
+    border-radius: 2px;
+    background-image: repeating-linear-gradient(
+        45deg,
+        var(--sb-pink) 0,
+        var(--sb-pink) 6px,
+        var(--sb-blue-soft) 6px,
+        var(--sb-blue-soft) 12px
+    );
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.washi--tl {
+    top: 0.5rem;
+    left: -0.35rem;
+    transform: rotate(-32deg);
+}
+
+.washi--br {
+    bottom: 2.5rem;
+    right: -0.25rem;
+    transform: rotate(18deg);
+    width: 64px;
+}
+
+/* Decorations */
+.scrapbook-deco {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.scrapbook-deco--stars {
+    top: 0.65rem;
+    right: 0.85rem;
+    font-size: 0.65rem;
+    color: #fbbf24;
+    letter-spacing: 2px;
+    text-shadow: 0 0 4px rgba(251, 191, 36, 0.5);
+}
+
+.scrapbook-deco--flower {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    font-size: 1.1rem;
+    opacity: 0.7;
+}
+
+.scrapbook-page-title {
+    position: relative;
+    z-index: 2;
+    font-family: 'Caveat', cursive;
+    font-size: 1.35rem;
+    color: #9d174d;
+    text-align: center;
+    margin: 0 0 0.75rem;
+}
+
+/* Polaroid photo boxes — zigzag layout (diagonal corners) */
+.scrapbook-photos {
+    position: relative;
+    z-index: 2;
+    min-height: min(68vw, 320px);
+    margin-top: 0.35rem;
+    padding: 0 0.35rem 1.35rem;
+}
+
+.scrapbook-photos .photo-box {
+    position: absolute;
+    width: min(47%, 172px);
+    max-width: 48%;
+    margin: 0;
+}
+
+/* Pola A: Foto 1 kiri atas · Foto 2 kanan bawah */
+.scrapbook-photos--zigzag-a .photo-box:nth-child(1) {
+    top: 0;
+    left: 0.2rem;
+    transform: rotate(-5deg);
+}
+
+.scrapbook-photos--zigzag-a .photo-box:nth-child(2) {
+    bottom: -1.75rem;
+    right: 0.2rem;
+    transform: rotate(4deg);
+}
+
+/* Pola B: Foto 1 kanan atas · Foto 2 kiri bawah */
+.scrapbook-photos--zigzag-b .photo-box:nth-child(1) {
+    top: 0;
+    right: 0.2rem;
+    left: auto;
+    transform: rotate(4deg);
+}
+
+.scrapbook-photos--zigzag-b .photo-box:nth-child(2) {
+    bottom: -1.75rem;
+    left: 0.2rem;
+    right: auto;
+    transform: rotate(-5deg);
+}
+
+.photo-box {
+    background: #fff;
+    padding: 0.45rem 0.45rem 1.75rem;
+    box-shadow: 2px 4px 14px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.photo-box--full {
+    position: relative;
+    width: 90%;
+    max-width: 240px;
+    margin: 0.5rem auto;
+    transform: rotate(-2deg);
+}
+
+/* Legacy tilt classes (overridden by zigzag rules above) */
+.photo-box--tilt-l,
+.photo-box--tilt-r {
+    margin-top: 0;
+}
+
+.photo-box img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, var(--sb-blue-soft), var(--sb-pink));
+}
+
+.photo-box-caption {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.6rem;
+    text-align: center;
+    color: #a8a29e;
+    font-family: 'Outfit', sans-serif;
+}
+
+.scrapbook-page-note {
+    position: relative;
+    z-index: 2;
+    margin: 0.75rem 0.5rem 0;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: #78716c;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Nav */
+.scrapbook-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    width: 100%;
+}
+
+.scrapbook-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--sb-pink-deep);
+    background: var(--sb-milky);
+    color: #9d174d;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px var(--sb-shadow);
+}
+
+.scrapbook-nav-btn:hover:not(:disabled) {
+    background: var(--sb-pink);
+    transform: scale(1.06);
+}
+
+.scrapbook-nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.scrapbook-page-indicator {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #9d174d;
+    min-width: 4rem;
+    text-align: center;
+}
+
+/* Secret page layout when unlocked */
+body.secret-unlocked {
+    overflow-x: hidden;
+    overflow-y: auto;
+    align-items: flex-start;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+body.secret-unlocked #flower-container {
+    z-index: 0;
+}
+
+.secret-page-wrap {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body.secret-unlocked #secret-card {
+    position: relative;
+    margin-top: min(12vh, 6rem);
+    margin-bottom: 1rem;
+}
+
+body.scrapbook-modal-open {
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .scrapbook-popup {
+        align-items: center;
+    }
+
+    .scrapbook-stage {
+        justify-content: center;
+    }
+
+    .scrapbook-book {
+        width: min(88vw, 380px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .scrapbook-cover-content {
+        padding: 1.75rem 1.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .scrapbook-stage,
+    .scrapbook-stage.is-flipping,
+    .scrapbook-stage.is-mobile-stage {
+        perspective-origin: 50% 45%;
+    }
+
+    .scrapbook-book {
+        transform: translateX(0) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .scrapbook-book {
+        max-height: min(62dvh, 440px);
+        width: min(86vw, 340px);
+    }
+
+    .scrapbook-page-inner {
+        padding: 1rem 0.65rem 0.85rem;
+    }
+
+    .scrapbook-photos {
+        min-height: min(72vw, 290px);
+        padding-bottom: 1.5rem;
+    }
+
+    .scrapbook-photos--zigzag-a .photo-box:nth-child(2),
+    .scrapbook-photos--zigzag-b .photo-box:nth-child(2) {
+        bottom: -1.25rem;
+    }
+
+    .scrapbook-photos .photo-box {
+        width: min(48%, 150px);
+    }
+
+    .photo-box {
+        padding-bottom: 1.4rem;
+    }
+
+    .scrapbook-page-title {
+        font-size: 1.15rem;
+    }
+
+    .scrapbook-nav-btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scrapbook-sheet {
+        transition: transform 0.35s ease;
+    }
+
+    .scrapbook-scroll-hint {
+        animation: none;
+    }
+}
+
+/* Text-only pages — no photo zigzag layout, clean reading layout */
+.scrapbook-page-inner--text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 1.5rem 1.25rem 1.25rem;
+    gap: 0.4rem;
+}
+
+.scrapbook-page-inner--text .scrapbook-page-title {
+    text-align: left;
+    border-bottom: 1.5px dashed rgba(236, 72, 153, 0.3);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
+    flex-shrink: 0;
+}
+
+.scrapbook-text-body {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4a3f38;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 0.25rem;
+    padding-bottom: 1.25rem;
+    word-break: break-word;
+}
+
+/* Scrollbar styling for text pages */
+.scrapbook-text-body::-webkit-scrollbar { width: 3px; }
+.scrapbook-text-body::-webkit-scrollbar-thumb { background: rgba(236,72,153,0.3); border-radius: 2px; }
+

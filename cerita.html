@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Cerita Kita — Lovee</title>
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&family=Playfair+Display:ital,wght@0,900;1,700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent !important;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #1a0a2e 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .scene {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1200px;
+            padding-top: 140px;
+            padding-bottom: 60px;
+        }
+
+        .orbit-container {
+            position: relative;
+            width: 800px; /* Increased for larger orbit */
+            height: 800px; /* Increased for larger orbit */
+            transform-style: preserve-3d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1200px;
+        }
+
+        /* Spinning 3D Orbit Ring */
+        .orbit-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(-12deg) rotateY(0deg);
+        }
+
+        /* Lightbox Styles */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        #lightbox.active img {
+            transform: scale(1);
+        }
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 101;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        /* Individual orbiting items */
+        .orbit-item {
+            position: absolute;
+            width: 130px;
+            height: 180px;
+            transform-style: preserve-3d;
+            left: calc(50% - 65px);
+            top: calc(50% - 90px);
+        }
+
+        /* 3D Double-Sided Card Container */
+        .card-3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* Card Face Styles */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Sisi Depan: Polaroid Photo Frame (Faces Outward) */
+        .card-front {
+            background: #fbfbf9;
+            border: 1px solid #e5e5df;
+            padding: 0.5rem;
+            padding-bottom: 1.25rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4), 0 8px 10px -6px rgba(0,0,0,0.4);
+            transform: rotateY(0deg);
+        }
+
+        /* Sisi Belakang: Vintage Alphabet Block (Faces Inward) */
+        .card-back {
+            background: #f5eedc;
+            border: 2px solid #dcd2be;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4), 0 8px 10px -6px rgba(0,0,0,0.4);
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 3D Orbit Positions (Radius is 290px on desktop, 165px on mobile) */
+        @media (min-width: 768px) {
+            .item-1 { transform: rotateY(0deg) translateZ(300px); }
+            .item-2 { transform: rotateY(288deg) translateZ(300px); }
+            .item-3 { transform: rotateY(216deg) translateZ(300px); }
+            .item-4 { transform: rotateY(144deg) translateZ(300px); }
+            .item-5 { transform: rotateY(72deg) translateZ(300px); }
+        }
+        @media (max-width: 767px) {
+            .orbit-container {
+                width: 500px; /* Adjusted for mobile */
+                height: 500px; /* Adjusted for mobile */
+            }
+            .orbit-item {
+                width: 100px;
+                height: 140px;
+                left: calc(50% - 50px);
+                top: calc(50% - 70px);
+            }
+            .item-1 { transform: rotateY(0deg) translateZ(275px); } /* Increased */
+            .item-2 { transform: rotateY(288deg) translateZ(210px); } /* Increased */
+            .item-3 { transform: rotateY(216deg) translateZ(210px); } /* Increased */
+            .item-4 { transform: rotateY(144deg) translateZ(210px); } /* Increased */
+            .item-5 { transform: rotateY(72deg) translateZ(210px); } /* Increased */
+        }
+
+        /* Keyframes spinParent removed in favor of JS rotation */
+
+        /* Central Beating Heart with 3D shadow and scale pulse */
+        .central-heart {
+            position: absolute;
+            z-index: 10;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            animation: pulse3D 2.2s ease-in-out infinite;
+        }
+
+        @media (max-width: 767px) {
+            .central-heart {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @keyframes pulse3D {
+            0%, 100% { transform: scale(1) translateZ(10px); filter: drop-shadow(0 0 25px rgba(244,63,94,0.6)); -webkit-filter: drop-shadow(0 0 25px rgba(244,63,94,0.6)); }
+            50% { transform: scale(1.1) translateZ(35px); filter: drop-shadow(0 0 45px rgba(244,63,94,0.9)); -webkit-filter: drop-shadow(0 0 45px rgba(244,63,94,0.9)); }
+        }
+    </style>
+</head>
+<body class="select-none overflow-x-hidden" style="background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #1a0a2e 100%);">
+    
+    <!-- Stars Background Effect -->
+    <div class="fixed inset-0 pointer-events-none opacity-50" id="stars-bg"></div>
+
+    <!-- Galaxy Glowing Orbs -->
+    <div class="fixed pointer-events-none" style="top:10%; left:5%; width:400px; height:400px; border-radius:50%; background: radial-gradient(circle, rgba(255,20,147,0.15), transparent 70%); filter:blur(60px);"></div>
+    <div class="fixed pointer-events-none" style="bottom:15%; right:5%; width:350px; height:350px; border-radius:50%; background: radial-gradient(circle, rgba(0,210,255,0.15), transparent 70%); filter:blur(60px);"></div>
+    <div class="fixed pointer-events-none" style="top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:600px; border-radius:50%; background: radial-gradient(circle, rgba(99,60,180,0.08), transparent 70%); filter:blur(80px);"></div>
+    
+    <!-- Navigation Back Link -->
+    <div class="absolute top-4 left-4 md:top-8 md:left-8 z-30">
+        <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-[10px] md:text-xs font-bold tracking-wider text-white/60 hover:text-white transition-all hover:scale-105 active:scale-95">
+            &larr; Beranda
+        </a>
+    </div>
+
+    <!-- Glowing header titles from reference photo -->
+    <div class="absolute top-20 md:top-16 left-0 right-0 text-center z-20 pointer-events-none flex flex-col items-center">
+        <h1 class="text-5xl md:text-7xl font-bold text-[#f5ebd6] font-latin drop-shadow-md pb-2">
+            For You
+        </h1>
+        <p class="text-xs md:text-sm text-white/50 mt-3 font-semibold max-w-lg leading-relaxed px-6">
+            Bagus gaa? ohh iyaaa ini temanya kayak luar angkasa gitu galaxy, pusat gravitasi nya itu hati yang di tengah, terus foto fotonya kamu muter, aku juga tambahin bitang binntag kecil kecil biar lebih kerasa galaxy nya, jangan lupa di scroll ke bawah ya, sebenernya aku mau masukin banya vidio tapi takut berat jadi ya tiga aja dah buat pelengkap hahaha.
+        </p>
+    </div>
+
+    <!-- Soft Ambient Lights behind the heart -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-rose-500/20 md:bg-rose-500/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none"></div>
+
+    <!-- 3D Scene Viewport -->
+    <div class="scene relative">
+        <div class="orbit-container">
+            
+            <!-- Central Beating 3D Heart -->
+            <div class="central-heart relative">
+                <!-- Reliable Glow Element for Mobile -->
+                <div class="absolute inset-0 bg-rose-500 rounded-full blur-[30px] md:blur-[40px] opacity-50 md:opacity-30"></div>
+                
+                <!-- Glossy pinkish-red 3D heart SVG -->
+                <svg class="w-full h-full text-rose-500 relative z-10" viewBox="0 0 24 24" fill="currentColor">
+                    <defs>
+                        <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff6b8b" />
+                            <stop offset="40%" stop-color="#f43f5e" />
+                            <stop offset="100%" stop-color="#be123c" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#heartGrad)" />
+                </svg>
+            </div>
+
+            <!-- Tilted 3D Orbiting Ring -->
+            <div class="orbit-ring">
+                
+                <!-- Item 1: Letter A (Back) / Polaroid 1 (Front) -->
+                <div class="orbit-item item-1">
+                    <div class="card-3d">
+                        <!-- Front Face: Polaroid Photo Placeholder -->
+                        <div class="card-face card-front">
+                            <div class="w-full aspect-square bg-[#0d1527] rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
+                                <img src="assets/images/arnil3.png" alt="Arnil 3" class="w-full h-full object-cover rounded" />
+                            </div>
+                            <span class="text-[9px] text-center font-bold text-gray-400 font-serif italic mt-1.5 block">Our Story 🌸</span>
+                        </div>
+                        <!-- Back Face: Vintage Block "A" -->
+                        <div class="card-face card-back">
+                            <span class="text-4xl md:text-5xl font-black text-[#56493b] font-serif tracking-tighter">A</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2: Letter R (Back) / Polaroid 2 (Front) -->
+                <div class="orbit-item item-2">
+                    <div class="card-3d">
+                        <!-- Front Face: Polaroid Photo Placeholder -->
+                        <div class="card-face card-front">
+                            <div class="w-full aspect-square bg-[#0d1527] rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
+                                <img src="assets/images/arnil4.png" alt="Arnil 4" class="w-full h-full object-cover rounded" />
+                            </div>
+                            <span class="text-[9px] text-center font-bold text-gray-400 font-serif italic mt-1.5 block">Together ✨</span>
+                        </div>
+                        <!-- Back Face: Vintage Block "R" -->
+                        <div class="card-face card-back">
+                            <span class="text-4xl md:text-5xl font-black text-[#56493b] font-serif tracking-tighter">R</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3: Letter N (Back) / Polaroid 3 (Front) -->
+                <div class="orbit-item item-3">
+                    <div class="card-3d">
+                        <!-- Front Face: Polaroid Photo Placeholder -->
+                        <div class="card-face card-front">
+                            <div class="w-full aspect-square bg-[#0d1527] rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
+                                <img src="assets/images/arnil5.png" alt="Arnil 5" class="w-full h-full object-cover rounded" />
+                            </div>
+                            <span class="text-[9px] text-center font-bold text-gray-400 font-serif italic mt-1.5 block">Deep Love 💖</span>
+                        </div>
+                        <!-- Back Face: Vintage Block "N" -->
+                        <div class="card-face card-back">
+                            <span class="text-4xl md:text-5xl font-black text-[#56493b] font-serif tracking-tighter">N</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4: Letter I (Back) / Polaroid 4 (Front) -->
+                <div class="orbit-item item-4">
+                    <div class="card-3d">
+                        <!-- Front Face: Polaroid Photo Placeholder -->
+                        <div class="card-face card-front">
+                            <div class="w-full aspect-square bg-[#0d1527] rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
+                                <img src="assets/images/arnil6.png" alt="Arnil 6" class="w-full h-full object-cover rounded" />
+                            </div>
+                            <span class="text-[9px] text-center font-bold text-gray-400 font-serif italic mt-1.5 block">Forever 🌟</span>
+                        </div>
+                        <!-- Back Face: Vintage Block "I" -->
+                        <div class="card-face card-back">
+                            <span class="text-4xl md:text-5xl font-black text-[#56493b] font-serif tracking-tighter">I</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5: Letter L (Back) / Polaroid 5 (Front) -->
+                <div class="orbit-item item-5">
+                    <div class="card-3d">
+                        <!-- Front Face: Polaroid Photo Placeholder -->
+                        <div class="card-face card-front">
+                            <div class="w-full aspect-square bg-[#0d1527] rounded-lg flex flex-col items-center justify-center relative overflow-hidden">
+                                <img src="assets/images/arnil7.png" alt="Arnil 7" class="w-full h-full object-cover rounded" />
+                            </div>
+                            <span class="text-[9px] text-center font-bold text-gray-400 font-serif italic mt-1.5 block">Always 🍃</span>
+                        </div>
+                        <!-- Back Face: Vintage Block "L" -->
+                        <div class="card-face card-back">
+                            <span class="text-4xl md:text-5xl font-black text-[#56493b] font-serif tracking-tighter">L</span>
+                        </div>
+                    </div>
+                </div>
+
+
+        </div> <!-- End of .orbit-ring -->
+        </div> <!-- End of .orbit-container -->
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-30 text-xs uppercase tracking-widest text-white z-20 pointer-events-none">
+            Scroll Down &darr;
+        </div>
+    </div> <!-- End of .scene relative -->
+
+    <!-- New Section with 3 Boxes -->
+    <section class="relative min-h-screen py-24 flex flex-col items-center justify-center px-6 md:px-8 z-10">
+        <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+            
+            <!-- Box 1 -->
+            <div class="flex flex-col items-center text-center w-full">
+                <!-- Video Container -->
+                <div class="w-full aspect-[3/4] rounded-[2rem] overflow-hidden glass-card mb-6 relative shadow-lg transition-shadow duration-500 hover:shadow-rose-500/20">
+                    <iframe class="absolute inset-0 w-full h-full object-cover" src="https://drive.google.com/file/d/1jZQT0AYdh7lU9ozgu_aKDdGigRUgI7Mz/preview" style="border: none;" allow="autoplay"></iframe>
+                </div>
+                <!-- Text Outside Below -->
+                <h3 class="text-2xl font-bold text-white mb-2">Kenangan 1</h3>
+                <p class="text-gray-400 text-sm leading-relaxed px-4">Ini moment kamu masih seleksi itu inget kan? harus inget lahh, kaciannn bangettt kamuu pasti capee itu aku tauu </p>
+            </div>
+
+            <!-- Box 2 -->
+            <div class="flex flex-col items-center text-center w-full">
+                <!-- Video Container -->
+                <div class="w-full aspect-[3/4] rounded-[2rem] overflow-hidden glass-card mb-6 relative shadow-lg transition-shadow duration-500 hover:shadow-rose-500/20">
+                    <iframe class="absolute inset-0 w-full h-full object-cover" src="https://drive.google.com/file/d/1fPeRGubTGviwebpLtwIb-qA5_OhUwRCU/preview" style="border: none;" allow="autoplay"></iframe>
+                </div>
+                <!-- Text Outside Below -->
+                <h3 class="text-2xl font-bold text-white mb-2">Kenangan 2</h3>
+                <p class="text-gray-400 text-sm leading-relaxed px-4">Ini vidio paling aojeiewjwjk baguss banget bangga aku sekali lagi bangga banget sama kamu arnel proud of you arnel, aku masukin ini biar kamu selalu inget kamu pernah berjuang dulu.</p>
+            </div>
+
+            <!-- Box 3 -->
+            <div class="flex flex-col items-center text-center w-full">
+                <!-- Video Container -->
+                <div class="w-full aspect-[3/4] rounded-[2rem] overflow-hidden glass-card mb-6 relative shadow-lg transition-shadow duration-500 hover:shadow-rose-500/20">
+                    <iframe class="absolute inset-0 w-full h-full object-cover" src="https://drive.google.com/file/d/1DhzeoVdkC3Hdoj3p6n5ZUlRYSu2v1CRk/preview" style="border: none;" allow="autoplay"></iframe>
+                </div>
+                <!-- Text Outside Below -->
+                <h3 class="text-2xl font-bold text-white mb-2">Kenangan 3</h3>
+                <p class="text-gray-400 text-sm leading-relaxed px-4">Kalo ini pas apa ya, kamu pulang bukber kalo ga salah mampir ke cafe, jadiii ke inget dulu kamu apa apa sering bilang "mas aku disni" "kak nanti aku mauuu kesanaa" jadii kangennn.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" onclick="closeLightbox(event)">
+        <div class="close-btn" onclick="closeLightbox(event)">&times;</div>
+        <img id="lightbox-img" src="" alt="Detail Foto" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- Star Initialization & Interactions script -->
+    <script>
+        // Lightbox Functions
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox(e) {
+            if(e) e.stopPropagation();
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // 3D Rotation Interaction (Scroll & Swipe)
+        let currentAngle = 0;
+        let baseSpeed = 0.1; // Kecepatan otomatis
+        let velocity = 0;    // Tambahan kecepatan dari scroll/swipe
+        const orbitRing = document.querySelector('.orbit-ring');
+
+        function animateOrbit() {
+            // Putar otomatis + velocity dari user
+            currentAngle += baseSpeed + velocity;
+            
+            // Terapkan ke elemen
+            if(orbitRing) {
+                orbitRing.style.transform = `rotateX(-12deg) rotateY(${currentAngle}deg)`;
+            }
+            
+            // Perlambat velocity (friction) agar kembali ke kecepatan normal
+            velocity *= 0.92;
+            
+            requestAnimationFrame(animateOrbit);
+        }
+        
+        // Memulai animasi frame
+        animateOrbit();
+
+        // Deteksi Scroll Mouse
+        window.addEventListener('wheel', (e) => {
+            // Hanya mendeteksi scroll ke kiri/kanan (contoh: pakai touchpad)
+            if (Math.abs(e.deltaX) > 0) {
+                velocity -= e.deltaX * 0.05;
+            }
+        });
+
+        // Deteksi Swipe (Touch) di HP
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchLastX = 0;
+        let isHorizontalSwipe = false;
+
+        window.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            touchLastX = touchStartX;
+            isHorizontalSwipe = false;
+        }, {passive: true});
+
+        window.addEventListener('touchmove', (e) => {
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const deltaX = currentX - touchLastX;
+            const totalDeltaX = Math.abs(currentX - touchStartX);
+            const totalDeltaY = Math.abs(currentY - touchStartY);
+            
+            // Jika geseran lebih dominan atas/bawah (vertikal), biarkan halaman ter-scroll dan jangan putar objek 3D
+            if (totalDeltaY > totalDeltaX && !isHorizontalSwipe) {
+                return;
+            }
+            
+            isHorizontalSwipe = true;
+            // Geser ke kanan (deltaX positif) memutar
+            velocity += deltaX * 0.15;
+            
+            touchLastX = currentX;
+        }, {passive: true});
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Lightbox Event Listeners on cards
+            const cards = document.querySelectorAll('.card-front');
+            cards.forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', () => {
+                    const img = card.querySelector('img');
+                    if (img) openLightbox(img.src);
+                });
+            });
+
+            const starsBg = document.getElementById('stars-bg');
+            if (starsBg) {
+                const starCount = window.innerWidth < 768 ? 70 : 100;
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    const isTwinkle = Math.random() > 0.6;
+                    const colorRand = Math.random();
+                    let color = '#ffffff';
+                    let shadowColor = 'rgba(255, 255, 255, 0.5)';
+                    if (colorRand > 0.85) {
+                        color = '#bae6fd';
+                        shadowColor = 'rgba(56, 189, 248, 0.8)';
+                    } else if (colorRand > 0.7) {
+                        color = '#a5f3fc';
+                        shadowColor = 'rgba(34, 211, 238, 0.8)';
+                    }
+                    star.className = `absolute rounded-full star-dot${isTwinkle ? ' animate-twinkle' : ''}`;
+                    const size = Math.random() * 3.2 + 0.8;
+                    star.style.backgroundColor = color;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.opacity = String(Math.random() * 0.8 + 0.2);
+                    star.style.animationDelay = Math.random() * 5 + 's';
+                    if (window.innerWidth >= 768) {
+                        star.style.boxShadow = `0 0 ${size * 1.5}px ${shadowColor}`;
+                    }
+                    fragment.appendChild(star);
+                }
+                starsBg.appendChild(fragment);
+            }
+        });
+    </script>
+    <!-- Global Music Player -->
+    <script src="assets/js/music-global.js" defer></script>
+</body>
+</html>
