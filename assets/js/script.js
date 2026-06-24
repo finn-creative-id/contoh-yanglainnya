@@ -196,9 +196,9 @@ function typeWriter(text, elementId, speed, callback) {
 }
 
 function startAllTyping() {
-    typeWriter("Website Kenangan untuk Arnill 🤍", "typewriter-h1", 100, () => {
+    typeWriter("Website Kenangan untukmu 🤍", "typewriter-h1", 100, () => {
         typeWriter("Tempat menyimpan cerita, foto, dan lagu favorit.", "typewriter-h2", 80, () => {
-            typeWriter("Semua momen spesial tersimpan di sini. Allooo arnel ini website buat kamu, arnel pernah bilang aku masih inget kalo arnel minta buatin website kan terus aku jawab iyaaa kalo ada waktu longgar ya ini dah aku buatin aku cicil juga dikit dikit dan ya ini hasilnya, semoga arnel sukaa ya, kamu scroll aja kebawah pelan pelan sambil di baca oh iya aku menyarankan buka website nya di laptop ya soal nya agak berat kalo di hp, kalo di laptop bakalan lumayan bagus, terus tombol ini kamu skip dulu scroll aja dulu sampe bawah okeyyy. aku juga milih warna biru meskipun ga se biru itu tapi ini biru sih biru soft aku tauu arnel suka warna biru jadi aku pilih kombinasi warna biru, putih susu, sama warna pink", "typewriter-p", 20, () => {
+            typeWriter("Semua momen spesial tersimpan di sini. Halo ini website buat kamu, kamu pernah bilang minta buatin website kan terus aku jawab iyaaa kalo ada waktu longgar ya ini dah aku buatin, semoga sukaa ya, kamu scroll aja kebawah pelan pelan sambil di baca oh iya aku menyarankan buka website nya di laptop ya soal nya agak berat kalo di hp, kalo di laptop bakalan lumayan bagus, terus tombol ini kamu skip dulu scroll aja dulu sampe bawah okeyyy. aku juga milih warna biru meskipun ga se biru itu tapi ini biru sih biru soft aku tauu kamu suka warna biru jadi aku pilih kombinasi warna biru, putih susu, sama warna pink", "typewriter-p", 20, () => {
                 const btn = document.getElementById('typewriter-btn');
                 if (btn) {
                     btn.style.opacity = '1';
@@ -323,9 +323,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const p  = document.getElementById('typewriter-p');
         const btn = document.getElementById('typewriter-btn');
 
-        if (h1) h1.innerHTML = "Website Kenangan untuk Arnill 🤍";
+        if (h1) h1.innerHTML = "Website Kenangan untukmu 🤍";
         if (h2) h2.innerHTML = "Tempat menyimpan cerita, foto, dan lagu favorit.";
-        if (p)  p.innerHTML  = "Semua momen spesial tersimpan di sini. Allooo arnel ini website buat kamu, arnel pernah bilang aku masih inget kalo arnel minta buatin website kan terus aku jawab iyaaa kalo ada waktu longgar ya ini dah aku buatin aku cicil kurang lebih tiga bulanan, semoga arnel sukaa ya, kamu scroll aja kebawah pelan pelan sambil di baca oh iya aku menyarankan buka website nya di laptop ya soal nya agak berat kalo di hp, kalo di laptop bakalan lumayan bagus, terus tombol ini kamu skip dulu scroll aja dulu sampe bawah okeyyy. aku juga milih warna biru meskipun ga se biru itu tapi ini biru sih biru soft aku tauu arnel suka warna biru jadi aku pilih kombinasi warna biru, putih susu, sama warna pink";
+        if (p)  p.innerHTML  = "Semua momen spesial tersimpan di sini. Halo ini website buat kamu, kamu pernah bilang minta buatin website kan terus aku jawab iyaaa kalo ada waktu longgar ya ini dah aku buatin, semoga sukaa ya, kamu scroll aja kebawah pelan pelan sambil di baca oh iya aku menyarankan buka website nya di laptop ya soal nya agak berat kalo di hp, kalo di laptop bakalan lumayan bagus, terus tombol ini kamu skip dulu scroll aja dulu sampe bawah okeyyy. aku juga milih warna biru meskipun ga se biru itu tapi ini biru sih biru soft aku tauu kamu suka warna biru jadi aku pilih kombinasi warna biru, putih susu, sama warna pink";
         if (btn) btn.style.opacity = '1';
 
         if (starsBg) {
