@@ -522,15 +522,13 @@
             <div class="mood-modal-backdrop" onclick="closeMoodModal('sad')"></div>
             <div class="mood-modal-content">
                 <div class="mood-paper-lines"></div>
-                <div class="text-center mb-8 relative z-10">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full shadow-md mb-4 text-3xl">😢</div>
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <span class="text-4xl mb-4">😢</span>
                     <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Semangat ya...</h3>
-                    <div class="relative glass-card bg-white/40 border border-white/60 p-6 md:p-8 rounded-3xl max-w-lg mx-auto shadow-sm">
-                        <p class="text-[#0B2F61]/90 text-sm md:text-base leading-relaxed font-medium italic">
-                        "Tuliskan pesan penyemangat untuk pasangan Anda saat mereka sedang merasa sedih atau lelah. Yakinkan mereka bahwa Anda selalu ada untuk mereka."
-                        </p>
-                    </div>
-                    <button onclick="closeMoodModal('sad')" class="mt-8 px-6 py-2 rounded-full text-white text-xs font-bold transition-transform hover:scale-105 active:scale-95 shadow-md" style="background: linear-gradient(135deg, #e8527a, #c0395f);">Tutup Surat</button>
+                    <p class="leading-relaxed font-medium text-sm text-[#2d2013]/90 mb-6 font-serif italic">
+                        "[Contoh Pesan] Semangat ya... aku tahu hari-harimu kadang terasa berat dan capek banget. Tapi ingat ya, kamu itu hebat, aku bangga banget sama kamu. Jangan lupa istirahat, dan kalau butuh tempat cerita, aku selalu di sini buat kamu."
+                    </p>
+                    <button onclick="closeMoodModal('sad')" class="px-6 py-2 rounded-full text-white text-xs font-bold transition-transform hover:scale-105 active:scale-95 shadow-md" style="background: linear-gradient(135deg, #e8527a, #c0395f);">Tutup Surat</button>
                 </div>
             </div>
         </div>
@@ -541,12 +539,13 @@
                 <div class="mood-paper-lines"></div>
                 <div class="relative z-10 flex flex-col items-center text-center">
                     <span class="text-4xl mb-4">🥺</span>
-                    <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Pesan Saat Rindu...</h3>
+                    <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Kangen juga ya? Hehe...</h3>
                     <p class="leading-relaxed font-medium text-sm text-[#2d2013]/90 mb-6 font-serif italic">
-                        "Bagian ini dapat diisi dengan pesan-pesan manis saat pasangan Anda sedang merindukan Anda. Beritahu mereka bahwa Anda juga memikirkan mereka, dan buat mereka merasa lebih baik."
+                        "[Contoh Pesan] Kangen juga ya? Hehe sama kok, aku juga sering kangen. Makanya ada website ini, biar kalau kamu kangen, kamu bisa lihat-lihat kenangan kita atau buka scrapbook. Semoga bisa mengobati rasa kangenmu yaa."
                     </p>
                     <button onclick="closeMoodModal('miss')" class="px-6 py-2 rounded-full text-white text-xs font-bold transition-transform hover:scale-105 active:scale-95 shadow-md" style="background: linear-gradient(135deg, #e8527a, #c0395f);">Tutup Surat</button>
                 </div>
+            </div>
         </div>
 
         <div id="mood-modal-angry" class="mood-modal">
@@ -555,13 +554,11 @@
                 <div class="mood-paper-lines"></div>
                 <div class="relative z-10 flex flex-col items-center text-center">
                     <span class="text-4xl mb-4">😡</span>
-                    <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Pesan Saat Marah...</h3>
-                    <div class="relative glass-card bg-white/40 border border-white/60 p-6 md:p-8 rounded-3xl max-w-lg mx-auto shadow-sm">
-                        <p class="text-[#0B2F61]/90 text-sm md:text-base leading-relaxed font-medium italic">
-                        "Tuliskan pesan bujukan atau permohonan maaf lucu saat pasangan Anda sedang kesal. Buat mereka tersenyum kembali saat membacanya."
-                        </p>
-                    </div>
-                    <button onclick="closeMoodModal('angry')" class="mt-8 px-6 py-2 rounded-full text-white text-xs font-bold transition-transform hover:scale-105 active:scale-95 shadow-md" style="background: linear-gradient(135deg, #e8527a, #c0395f);">Tutup Surat</button>
+                    <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Jangan cemberut terus dong...</h3>
+                    <p class="leading-relaxed font-medium text-sm text-[#2d2013]/90 mb-6 font-serif italic">
+                        "[Contoh Pesan] Jangan cemberut terus dong... Maaf yaa kalau aku ada salah yang bikin kamu kesel. Coba deh tarik napas pelan-pelan, terus kalau udah tenang kabari aku ya. Aku selalu siap dengerin unek-unek kamu."
+                    </p>
+                    <button onclick="closeMoodModal('angry')" class="px-6 py-2 rounded-full text-white text-xs font-bold transition-transform hover:scale-105 active:scale-95 shadow-md" style="background: linear-gradient(135deg, #e8527a, #c0395f);">Tutup Surat</button>
                 </div>
             </div>
         </div>
@@ -572,9 +569,9 @@
                 <div class="mood-paper-lines"></div>
                 <div class="relative z-10 flex flex-col items-center text-center">
                     <span class="text-4xl mb-4">🥱</span>
-                    <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Pesan Saat Gabut...</h3>
+                    <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Lagi gabut ya? Hehe...</h3>
                     <p class="leading-relaxed font-medium text-sm text-[#2d2013]/90 mb-6 font-serif italic">
-                        "Tambahkan ide-ide lucu atau pesan manis ketika pasangan Anda sedang merasa bosan."
+                        "[Contoh Pesan] Lagi gabut ya? Coba buka halaman cerita atau mainin scrapbook di halaman pesan rahasia, lihat-lihat lagi momen lucu kita. Atau kalau bener-bener gak tahu mau ngapain, coba dengerin lagu-lagu di playlist kita."
                     </p>
                     <button onclick="closeMoodModal('bored')" class="px-6 py-2 rounded-full text-white text-xs font-bold transition-transform hover:scale-105 active:scale-95 shadow-md" style="background: linear-gradient(135deg, #e8527a, #c0395f);">Tutup Surat</button>
                 </div>
@@ -587,13 +584,11 @@
                 <div class="mood-paper-lines"></div>
                 <div class="relative z-10 flex flex-col items-center text-center">
                     <span class="text-4xl mb-4">😊</span>
-                    <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Pesan Saat Bahagia!</h3>
-                    <div class="relative glass-card bg-white/40 border border-white/60 p-6 md:p-8 rounded-3xl max-w-lg mx-auto shadow-sm">
-                        <p class="text-[#0B2F61]/90 text-sm md:text-base leading-relaxed font-medium italic">
-                        "Tuliskan dukungan dan rasa syukur Anda karena pasangan sedang merasa bahagia. Rayakan kebahagiaan mereka bersama-sama."
-                        </p>
-                    </div>
-                    <button onclick="closeMoodModal('happy')" class="mt-8 px-6 py-2 rounded-full text-white text-xs font-bold transition-transform hover:scale-105 active:scale-95 shadow-md" style="background: linear-gradient(135deg, #e8527a, #c0395f);">Tutup Surat</button>
+                    <h3 class="text-2xl font-bold font-latin mb-4 text-[#0B2F61]">Senang banget aku dengarnya!</h3>
+                    <p class="leading-relaxed font-medium text-sm text-[#2d2013]/90 mb-6 font-serif italic">
+                        "[Contoh Pesan] Senang banget aku dengarnya! Pertahankan terus mood bahagianya yaa. Semoga hari-harimu selalu dipenuhi dengan tawa dan hal-hal baik. Jangan lupa bersyukur dan terus bahagia bersama!"
+                    </p>
+                    <button onclick="closeMoodModal('happy')" class="px-6 py-2 rounded-full text-white text-xs font-bold transition-transform hover:scale-105 active:scale-95 shadow-md" style="background: linear-gradient(135deg, #e8527a, #c0395f);">Tutup Surat</button>
                 </div>
             </div>
         </div>
