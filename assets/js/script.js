@@ -198,7 +198,7 @@ function typeWriter(text, elementId, speed, callback) {
 function startAllTyping() {
     typeWriter("Demo Website Kenangan 🤍", "typewriter-h1", 100, () => {
         typeWriter("Template romantis untuk menyimpan momen spesial bersama.", "typewriter-h2", 80, () => {
-            typeWriter("Halo! Ini adalah contoh teks sambutan yang bisa Anda ganti sesuai keinginan. Ceritakan alasan Anda membuat website ini, mungkin sebagai hadiah ulang tahun, anniversary, atau sekadar kejutan manis. Website ini dilengkapi dengan animasi menarik dan musik latar yang dapat disesuaikan. Scroll ke bawah untuk melihat fitur-fitur lainnya.", "typewriter-p", 20, () => {
+            typeWriter("Halo! Ini adalah contoh teks sambutan yang bisa Anda ganti sesuai keinginan. Ceritakan alasan Anda membuat website ini, mungkin sebagai hadiah ulang tahun, anniversary, atau sekadar kejutan manis. Website ini dilengkapi dengan animasi menarik dan musik latar yang dapat disesuaikan background ini bisa di kasih foto ya sesuai request. Scroll ke bawah untuk melihat fitur-fitur lainnya.", "typewriter-p", 20, () => {
                 const btn = document.getElementById('typewriter-btn');
                 if (btn) {
                     btn.style.opacity = '1';
