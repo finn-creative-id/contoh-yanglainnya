@@ -477,30 +477,40 @@
                 </div>
 
                 <!-- Envelope Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-3xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-4xl mx-auto">
                     <!-- Card 1: Sedih -->
-                    <div onclick="openMoodModal('sad')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3">
-                        <div class="text-3xl">😢</div>
+                    <div onclick="openMoodModal('sad')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <svg class="w-12 h-12 text-[#0B2F61]/80 group-hover:text-[#FF1493] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        <div class="text-2xl mt-1">😢</div>
                         <p class="text-[#0B2F61] font-bold text-xs">Sedih / Capek</p>
                     </div>
                     <!-- Card 2: Kangen -->
-                    <div onclick="openMoodModal('miss')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3">
-                        <div class="text-3xl">🥺</div>
+                    <div onclick="openMoodModal('miss')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <svg class="w-12 h-12 text-[#0B2F61]/80 group-hover:text-[#FF1493] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        <div class="text-2xl mt-1">🥺</div>
                         <p class="text-[#0B2F61] font-bold text-xs">Kangen Kamu</p>
                     </div>
                     <!-- Card 3: Ngambek -->
-                    <div onclick="openMoodModal('angry')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3">
-                        <div class="text-3xl">😡</div>
+                    <div onclick="openMoodModal('angry')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <svg class="w-12 h-12 text-[#0B2F61]/80 group-hover:text-[#FF1493] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        <div class="text-2xl mt-1">😡</div>
                         <p class="text-[#0B2F61] font-bold text-xs">Lagi Kesel</p>
                     </div>
                     <!-- Card 4: Gabut -->
-                    <div onclick="openMoodModal('bored')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3">
-                        <div class="text-3xl">🥱</div>
+                    <div onclick="openMoodModal('bored')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <svg class="w-12 h-12 text-[#0B2F61]/80 group-hover:text-[#FF1493] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        <div class="text-2xl mt-1">🥱</div>
                         <p class="text-[#0B2F61] font-bold text-xs">Gabut / Bosan</p>
                     </div>
                     <!-- Card 5: Senang -->
-                    <div onclick="openMoodModal('happy')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3 col-span-2 md:col-span-1">
-                        <div class="text-3xl">😊</div>
+                    <div onclick="openMoodModal('happy')" class="envelope-card cursor-pointer bg-white/50 border border-white/80 p-6 rounded-3xl flex flex-col items-center gap-3 col-span-2 md:col-span-1 relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <svg class="w-12 h-12 text-[#0B2F61]/80 group-hover:text-[#FF1493] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        <div class="text-2xl mt-1">😊</div>
                         <p class="text-[#0B2F61] font-bold text-xs">Lagi Happy</p>
                     </div>
                 </div>
